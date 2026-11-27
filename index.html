@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Disha Basra: games, apps, AR, research and more.">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Disha Basra</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a builder's shelf. Short intro, filter chips, then a grid of project tiles, each with its own drawn motif. */
+:root{
+  --bg:#F4F4F8; --surface:#FFFFFF; --ink:#16152B; --muted:#5D5C78; --line:#DEDDEA;
+  --accent:#3A3FE0; --accent-soft:#E4E5FD; --live:#1F7A55; --wip:#B5650F;
+  --t-tetris:#6A4DF5; --t-chess:#2A2A3C; --t-hoot:#23654B; --t-city:#E2683C; --t-ar:#1C8FB8; --t-research:#8A3B8F; --t-inc:#C9372C;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Figtree", system-ui, -apple-system, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111120; --surface:#1A1A2C; --ink:#EDEDF7; --muted:#A3A2BE; --line:#2D2C45;
+  --accent:#8C90FF; --accent-soft:#25264A; --live:#5FD3A0; --wip:#F2AE5B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111120; --surface:#1A1A2C; --ink:#EDEDF7; --muted:#A3A2BE; --line:#2D2C45;
+  --accent:#8C90FF; --accent-soft:#25264A; --live:#5FD3A0; --wip:#F2AE5B; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1120px;margin:0 auto;padding-block:56px 72px;display:flex;flex-direction:column;gap:56px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+header{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.hello{font:500 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+h1{font:800 clamp(44px,8vw,92px)/.95 var(--f-display);letter-spacing:-.03em;margin:10px 0 18px;text-wrap:balance}
+h1 span{color:var(--accent)}
+.lede{max-width:58ch;font-size:18px;color:var(--muted);margin:0}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:600 14px var(--f-body);padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.bar{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:20px}
+.bar h2{font:600 28px var(--f-display);margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 13px var(--f-mono);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:-28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card.feature{grid-column:span 2}
+@media (max-width:700px){.card.feature{grid-column:auto} header{grid-template-columns:1fr}}
+.art{height:170px;position:relative;display:grid;place-items:center;overflow:hidden;color:#fff}
+.body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
+.meta{display:flex;gap:8px;align-items:center;font:500 12px var(--f-mono);color:var(--muted);letter-spacing:.03em}
+.status{display:inline-flex;align-items:center;gap:6px}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.live{color:var(--live)} .wip{color:var(--wip)}
+.card h3{font:600 23px/1.15 var(--f-display);margin:0}
+.card p{margin:0;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tag{font:400 12px var(--f-mono);padding:3px 8px;border-radius:6px;background:var(--bg);color:var(--muted)}
+.todo{font:500 12px var(--f-mono);color:var(--wip);border:1px dashed currentColor;border-radius:8px;padding:6px 10px}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts a{font:600 14px var(--f-body);text-decoration:none}
+
+/* motifs */
+.tetris{background:var(--t-tetris)}
+.tetris .well{display:grid;grid-template-columns:repeat(8,18px);grid-auto-rows:18px;gap:2px}
+.tetris i{border-radius:3px;background:rgba(255,255,255,.12)}
+.tetris i.a{background:#FFD23F}.tetris i.b{background:#3DDC97}.tetris i.c{background:#FF6B9A}.tetris i.d{background:#7FD8FF}
+.chess{background:var(--t-chess)}
+.board{display:grid;grid-template-columns:repeat(8,17px);grid-auto-rows:17px;transform:rotate(-8deg);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.board i{background:#E9E4D4}.board i.k{background:#7C9A6B}
+.piece{position:absolute;font-size:54px;right:18%;top:18%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.4))}
+.hoot{background:var(--t-hoot)}
+.hoot svg{width:110px}
+.city{background:linear-gradient(#F59A5F,var(--t-city))}
+.sky{position:absolute;bottom:0;left:0;right:0;height:110px;display:flex;align-items:flex-end;gap:5px;padding:0 14px}
+.sky b{flex:1;background:#2B1B3D;border-radius:3px 3px 0 0;position:relative}
+.bubble{position:absolute;top:22px;left:22px;background:#fff;color:#2B1B3D;font:600 13px var(--f-mono);padding:6px 10px;border-radius:12px 12px 12px 2px}
+.ar{background:radial-gradient(circle at 50% 60%,#4FC3E8,var(--t-ar))}
+.cube{width:70px;height:70px;transform-style:preserve-3d;animation:spin 9s linear infinite}
+.cube i{position:absolute;inset:0;border:2px solid #fff;background:rgba(255,255,255,.12)}
+.cube i:nth-child(1){transform:translateZ(35px)}.cube i:nth-child(2){transform:rotateY(90deg) translateZ(35px)}
+.cube i:nth-child(3){transform:rotateY(180deg) translateZ(35px)}.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(35px)}
+.cube i:nth-child(5){transform:rotateX(90deg) translateZ(35px)}.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(35px)}
+.scene{perspective:400px;transform:rotateX(-20deg)}
+.corner{position:absolute;width:22px;height:22px;border:3px solid #fff}
+@keyframes spin{to{transform:rotateY(360deg) rotateX(360deg)}}
+.research{background:var(--t-research)}
+.bars{display:flex;align-items:flex-end;gap:10px;height:96px}
+.bars b{width:22px;background:rgba(255,255,255,.85);border-radius:4px 4px 0 0}
+.inc{background:var(--t-inc)}
+.inc .big{font:800 56px var(--f-display);letter-spacing:-.04em}
+ .unwind{background:linear-gradient(160deg,#6FBF8E,#2F7D5B)}
+.breath{position:absolute;width:120px;height:120px;border-radius:50%;border:2px solid rgba(255,255,255,.6);animation:breathe 8s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.35);opacity:.4}}
+.unwind .big{font-size:48px;position:relative}
+.campus{background:linear-gradient(135deg,#F3B6D2,#B9A6F2);display:flex;flex-direction:column;justify-content:center;align-items:stretch;gap:10px;padding:0 28px}
+.msg{font:500 13px var(--f-body);padding:8px 12px;border-radius:14px;max-width:75%;color:#3A2E4A;background:#fff}
+.m2{align-self:flex-end;background:#3A2E4A;color:#fff}
+.more{background:repeating-linear-gradient(45deg,var(--bg) 0 10px,var(--surface) 10px 20px);color:var(--muted)}
+.more .big{font:800 56px var(--f-display);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.cube,.breath{animation:none}.card{transition:none}}
+
+.about{display:grid;grid-template-columns:1fr 1fr;gap:32px;border-top:1px solid var(--line);padding-top:32px}
+@media (max-width:700px){.about{grid-template-columns:1fr}}
+.about h2{font:600 28px var(--f-display);margin:0 0 10px}
+.about p{margin:0 0 12px;max-width:60ch;color:var(--muted)}
+footer{font:400 13px var(--f-mono);color:var(--muted)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="hello">Student · builder · Brandeis University</div>
+      <h1>Hi, I'm Disha.<br>I make <span>things.</span></h1>
+      <p class="lede">Games, apps, AR experiments and research. Some are finished, some are still being built. This is where all of it lives.</p>
+    </div>
+    <div class="links">
+      <a class="btn primary" href="#work">See my work</a>
+      <a class="btn" href="https://github.com/dishabasra">GitHub</a>
+      <span class="btn" title="Add your LinkedIn link">LinkedIn</span>
+    </div>
+  </header>
+
+  <div id="work">
+    <div class="bar">
+      <h2>The shelf</h2>
+      <div class="chips" role="group" aria-label="Filter projects">
+        <button class="chip" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" data-f="game" aria-pressed="false">Games</button>
+        <button class="chip" data-f="app" aria-pressed="false">Apps</button>
+        <button class="chip" data-f="ar" aria-pressed="false">AR</button>
+        <button class="chip" data-f="research" aria-pressed="false">Research</button>
+        <button class="chip" data-f="startup" aria-pressed="false">Incubator</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid">
+
+    <article class="card" data-k="game">
+      <div class="art tetris"><div class="well" id="well"></div></div>
+      <div class="body">
+        <div class="meta"><span class="status live">Built</span></div>
+        <h3>Berry Bitty Blocks</h3>
+        <p>A two-player falling-block game set in a berry-themed city. Share a four-letter room code, race a friend on the same piece sequence, and send sour berries to their board when you clear rows. Up to four players per room.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Multiplayer</span><span class="tag">Cloudflare Workers</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="game">
+      <div class="art chess"><div class="board" id="board"></div><div class="piece">♞</div></div>
+      <div class="body">
+        <div class="meta"><span class="status live">Built and tested</span></div>
+        <h3>Pawsitions</h3>
+        <p>Chess with a puppy. Every piece you capture drops a treat in Biscuit's bowl, and he grows up beside the board as you play. Play on one screen, against the computer, or online with a room code. Every rule is there, including castling, en passant and promotion, checked by 148 tests.</p>
+        <div class="acts"><a href="https://github.com/dishabasra/Pawsitions">Code on GitHub ↗</a></div>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Chess engine</span><span class="tag">Durable Objects</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="game">
+      <div class="art city"><div class="bubble">¡Hola! 👋</div><div class="sky" id="sky"></div></div>
+      <div class="body">
+        <div class="meta"><span class="status wip">In progress</span></div>
+        <h3>TalkTown</h3>
+        <p>Practice speaking English, Spanish or French by walking around an illustrated city and talking out loud with the people in each place: a café, a market, a taxi, a job interview and more. It listens to you, answers in its own voice, and scores your pronunciation.</p>
+        <div class="acts"><a href="https://github.com/dishabasra/New-App">Code on GitHub ↗</a></div>
+        <div class="tags"><span class="tag">Speech recognition</span><span class="tag">3 languages</span><span class="tag">PWA</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="app">
+      <div class="art hoot">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><ellipse cx="50" cy="56" rx="34" ry="38" fill="#EDE5FC"/><circle cx="37" cy="48" r="12" fill="#fff"/><circle cx="63" cy="48" r="12" fill="#fff"/><circle cx="38" cy="49" r="5" fill="#16152B"/><circle cx="62" cy="49" r="5" fill="#16152B"/><path d="M45 60 L50 68 L55 60 Z" fill="#FF8A5B"/><path d="M22 28 L32 38 L36 24 Z M78 28 L68 38 L64 24 Z" fill="#EDE5FC"/></svg>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="status live">Live</span> · Built for BUS 131A</div>
+        <h3>Hoot</h3>
+        <p>A student planner that reads your syllabus for you. It pulls class times, deadlines, absence rules and grading weights out of a syllabus, syncs with Moodle, Canvas and Google Calendar, and tells you what to start next. It also has Notion-style notes with flashcards, a lecture recorder, a grade calculator and a GPA tracker.</p>
+        <div class="acts"><a href="https://hoot.dishabasra.workers.dev">Open Hoot ↗</a></div>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">Cloudflare Workers</span><span class="tag">D1</span><span class="tag">Google sign-in</span><span class="tag">PWA</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="app">
+      <div class="art unwind"><div class="breath"></div><div class="big">🌿</div></div>
+      <div class="body">
+        <div class="meta"><span class="status live">Built</span></div>
+        <h3>Unwind</h3>
+        <p>Short lessons on stress, sleep and procrastination with XP and streaks, plus a mini-game arcade: Box Breathing Boss, Reframe It, 5-4-3-2-1 Grounding and Stress Myth Buster.</p>
+        <div class="acts"><a href="https://github.com/dishabasra/Unwind-App">Code on GitHub ↗</a></div>
+        <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">Wellbeing</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="app">
+      <div class="art campus"><div class="msg m1">When is add/drop?</div><div class="msg m2">Friday! Want a reminder?</div></div>
+      <div class="body">
+        <div class="meta"><span class="status wip">Prototype</span></div>
+        <h3>Campus Companion</h3>
+        <p>An academic advisor chatbot paired with a stress relief corner: one-minute breathing, a grounding check-in and a mood-matching mini game.</p>
+        <div class="acts"><a href="https://github.com/dishabasra/Noam-s-app">Code on GitHub ↗</a></div>
+        <div class="tags"><span class="tag">HTML/CSS/JS</span><span class="tag">Chatbot</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="ar">
+      <div class="art ar">
+        <span class="corner" style="top:18px;left:18px;border-right:0;border-bottom:0"></span>
+        <span class="corner" style="top:18px;right:18px;border-left:0;border-bottom:0"></span>
+        <span class="corner" style="bottom:18px;left:18px;border-right:0;border-top:0"></span>
+        <span class="corner" style="bottom:18px;right:18px;border-left:0;border-top:0"></span>
+        <div class="scene"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      </div>
+      <div class="body">
+        <div class="meta"><span class="status wip">Experiments</span></div>
+        <h3>AR projects</h3>
+        <p class="todo">Add: each AR piece (what tool you used, a video or photo, a link to try it)</p>
+        <div class="tags"><span class="tag">Augmented reality</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="research">
+      <div class="art research"><div class="bars"><b style="height:40%"></b><b style="height:70%"></b><b style="height:55%"></b><b style="height:92%"></b><b style="height:65%"></b></div></div>
+      <div class="body">
+        <div class="meta"><span class="status wip">Research</span></div>
+        <h3>Research project</h3>
+        <p class="todo">Add: the title, the question you studied, what you found, and a PDF or poster</p>
+        <div class="tags"><span class="tag">Research</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="startup">
+      <div class="art inc"><div class="big">QC</div></div>
+      <div class="body">
+        <div class="meta"><span class="status wip">Incubator</span> · Queens College</div>
+        <h3>Tech Incubator project</h3>
+        <p class="todo">Add: the project name, the problem it solves, your role, and any demo or pitch deck</p>
+        <div class="tags"><span class="tag">Startup</span></div>
+      </div>
+    </article>
+
+    <article class="card" data-k="all">
+      <div class="art more"><div class="big">+</div></div>
+      <div class="body">
+        <div class="meta">Room for more</div>
+        <h3>Everything else</h3>
+        <p>Class projects, hackathons, designs, writing. Send them over and they get a tile here.</p>
+      </div>
+    </article>
+  </div>
+
+  <section class="about">
+    <div>
+      <h2>About me</h2>
+      <p>I'm a student at Brandeis University who learns by building. I like making tools that fix problems I actually have (Hoot started because keeping track of syllabi was a mess) and games that are fun to show friends.</p>
+      <p class="todo">Add: your major, year, and anything you want people to know</p>
+    </div>
+    <div>
+      <h2>Get in touch</h2>
+      <p>Open to internships, collaborations and good ideas.</p>
+      <p class="todo">Add: the email you want public, LinkedIn, résumé PDF</p>
+    </div>
+  </section>
+
+  <footer>© 2026 Disha Basra</footer>
+</div>
+
+<script>
+(function(){
+  // Tetris well
+  var shape="........ ........ ...aa... ...aa... ........ b......d bb..c.dd bccccddd".split(" ").join("");
+  var w=document.getElementById("well"),h="";
+  for(var i=0;i<shape.length;i++){var c=shape[i];h+='<i class="'+(c==="."?"":c)+'"></i>';}
+  w.innerHTML=h;
+  // Chess board
+  var b=document.getElementById("board"),bh="";
+  for(var r=0;r<8;r++)for(var f=0;f<8;f++)bh+='<i class="'+((r+f)%2?"k":"")+'"></i>';
+  b.innerHTML=bh;
+  // Skyline
+  var hs=[40,70,55,95,60,80,45,100,65,50,75],sh="";
+  hs.forEach(function(x){sh+='<b style="height:'+x+'%"></b>';});
+  document.getElementById("sky").innerHTML=sh;
+  // Filters
+  var chips=document.querySelectorAll(".chip"),cards=document.querySelectorAll(".card");
+  chips.forEach(function(ch){ch.addEventListener("click",function(){
+    var f=ch.dataset.f;
+    chips.forEach(function(o){o.setAttribute("aria-pressed",o===ch?"true":"false");});
+    cards.forEach(function(c){c.hidden=!(f==="all"||c.dataset.k===f||c.dataset.k==="all");});
+  });});
+})();
+</script>
+
+</body>
+</html>
